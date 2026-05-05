@@ -4,8 +4,6 @@ export const settings = defineType({
   name: "settings",
   title: "Site Settings",
   type: "document",
-  // Only one settings document ever needed
-  __experimental_actions: ["update", "publish"],
   fields: [
     defineField({
       name: "name",

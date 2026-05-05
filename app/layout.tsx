@@ -3,7 +3,14 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { Footer } from "@/components/Footer";
 import "./globals.css";
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
+  ? process.env.NEXT_PUBLIC_SITE_URL
+  : process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : "http://localhost:3000";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "Emily — Cambodia",
   description:
     "Ancient grace. Modern world. Pure Cambodia. Follow Emily — Khmer fashion, travel, and culture through the eyes of someone who lives it.",

@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { client } from "@/sanity/lib/client";
 import { galleryFeedQuery, settingsQuery } from "@/sanity/lib/queries";
 import { Nav } from "@/components/Nav";
@@ -39,7 +40,9 @@ export default async function GalleryPage() {
             </p>
           </div>
         ) : (
-          <GalleryClient feed={feed} />
+          <Suspense fallback={<div className="px-7 py-20 text-center text-ink-faint">Loading…</div>}>
+            <GalleryClient feed={feed} />
+          </Suspense>
         )}
       </main>
     </>
