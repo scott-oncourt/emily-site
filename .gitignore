@@ -33,3 +33,5 @@ Thumbs.db
 
 # Sanity Studio dev artefacts
 .sanity/
+
+.vercel

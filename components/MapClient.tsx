@@ -19,7 +19,7 @@ type PlaceShoot = {
   title: string;
   slug: string;
   date?: string;
-  coverImage?: { _id: string; image: object; alt?: string };
+  coverImage?: { _id: string; image: object; alt?: string } | null;
   photoCount?: number;
 };
 
