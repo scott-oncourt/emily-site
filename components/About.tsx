@@ -1,10 +1,10 @@
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
-import { PortableText } from "next-sanity";
+import { PortableText, type PortableTextBlock } from "next-sanity";
 
 type Settings = {
   name: string;
-  bio: object[];
+  bio: PortableTextBlock[];
   aboutPhoto?: object;
 };
 
