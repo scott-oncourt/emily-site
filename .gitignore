@@ -1,0 +1,35 @@
+# deps
+node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# build
+.next/
+out/
+build/
+dist/
+
+# env (never commit secrets / tokens / project-specific config)
+.env
+.env*.local
+
+# misc
+*.log
+*.tsbuildinfo
+.DS_Store
+Thumbs.db
+
+# vercel
+.vercel
+
+# IDE
+.idea/
+.vscode/
+
+# Sanity Studio dev artefacts
+.sanity/

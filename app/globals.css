@@ -1,0 +1,186 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Noto+Serif+Khmer:wght@400;500;600&family=Noto+Sans+Khmer:wght@300;400;500&display=swap');
+@import 'leaflet/dist/leaflet.css';
+
+/*
+ * Sandstone & Ember palette
+ *
+ * Light mode is afternoon sun on Khmer sandstone — warm parchment paper, deep
+ * umber ink, terracotta ember (the fired-clay of Bakong's bricks).
+ * Dark mode is candlelit temple shadow — warm near-black, bone parchment,
+ * saffron ember (the marigold of monks' robes).
+ *
+ * Tokens are semantic (ink/paper/ember) not literal. Components reference
+ * roles, not colors.
+ */
+
+:root {
+  /* Dark mode — defaults so SSR matches first paint */
+  --paper:      21 16 10;        /* #15100A */
+  --surface:    34 26 18;        /* #221A12 */
+  --surface-2:  47 36 23;        /* #2F2417 */
+
+  --ink:        237 223 195;     /* #EDDFC3 — warm bone */
+  --ink-dim:    176 160 133;     /* #B0A085 */
+  --ink-faint:  122 110 88;      /* #7A6E58 */
+
+  --ember:      232 132 62;      /* #E8843E — saffron */
+  --ember-dim:  192 118 78;      /* #C0764E */
+  --shadow:     139 57 35;       /* #8B3923 — rust maroon */
+
+  --rule:       66 50 34;        /* #423222 — subtle hairline */
+
+  /* Theme-invariant — always cream regardless of mode.
+   * Use for text overlaid on dark photographs / dark gradient blocks. */
+  --bone:       237 223 195;
+  --bone-dim:   200 186 158;
+  --bone-faint: 150 136 110;
+
+  /* Legacy names — mapped to new semantic tokens for backward-compat */
+  --c-bg: var(--paper);
+  --c-text: var(--ink);
+  --c-accent: var(--ember);
+  --c-surface: var(--surface);
+  --c-muted: var(--ink-dim);
+}
+
+.light {
+  /* Light mode — sandstone in afternoon sun */
+  --paper:      235 217 176;     /* #EBD9B0 — warm sandstone */
+  --surface:    221 199 157;     /* #DDC79D */
+  --surface-2:  205 181 138;     /* #CDB58A */
+
+  --ink:        42 27 14;        /* #2A1B0E — deep umber */
+  --ink-dim:    92 74 46;        /* #5C4A2E */
+  --ink-faint:  138 122 94;      /* #8A7A5E */
+
+  --ember:      180 90 44;       /* #B45A2C — terracotta */
+  --ember-dim:  150 78 42;       /* #964E2A */
+  --shadow:     90 30 14;        /* #5A1E0E — dried blood maroon */
+
+  --rule:       190 165 122;     /* #BEA57A — pale sandstone hairline */
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+  background: rgb(var(--paper));
+}
+html.light {
+  color-scheme: light;
+}
+
+body {
+  background: rgb(var(--paper));
+  color: rgb(var(--ink));
+  font-family: 'Inter', 'Noto Sans Khmer', system-ui, sans-serif;
+  overflow-x: hidden;
+  transition: background-color 220ms ease, color 220ms ease;
+  font-feature-settings: 'kern' 1, 'liga' 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: rgb(var(--ember) / 0.35);
+  color: rgb(var(--ink));
+}
+
+/* ─── Typography utilities ──────────────────────────────────────────── */
+
+.font-display {
+  font-family: 'Cormorant Garamond', 'Noto Serif Khmer', Georgia, serif;
+  font-feature-settings: 'kern' 1, 'liga' 1, 'dlig' 1;
+}
+.font-body {
+  font-family: 'Inter', 'Noto Sans Khmer', system-ui, sans-serif;
+}
+
+.kicker {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.deck {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(18px, 2.2vw, 22px);
+  line-height: 1.5;
+  color: rgb(var(--ink-dim));
+}
+
+/* Use .ink-faint / .ink-dim utilities instead of opacity tricks. */
+.ink-dim   { color: rgb(var(--ink-dim)); }
+.ink-faint { color: rgb(var(--ink-faint)); }
+
+/* ─── Leaflet — themed via CSS variables ───────────────────────────── */
+
+.leaflet-container {
+  background: rgb(var(--paper));
+  font-family: 'Inter', 'Noto Sans Khmer', system-ui, sans-serif;
+}
+.leaflet-control-attribution {
+  background: rgb(var(--paper) / 0.7) !important;
+  color: rgb(var(--ink-faint)) !important;
+  font-size: 10px !important;
+  padding: 2px 6px !important;
+}
+.leaflet-control-attribution a {
+  color: rgb(var(--ember-dim)) !important;
+}
+.leaflet-control-zoom a {
+  background: rgb(var(--paper) / 0.85) !important;
+  color: rgb(var(--ink)) !important;
+  border: 1px solid rgb(var(--ember) / 0.25) !important;
+}
+.leaflet-control-zoom a:hover {
+  background: rgb(var(--surface) / 0.95) !important;
+  color: rgb(var(--ember)) !important;
+}
+.leaflet-popup-content-wrapper {
+  background: rgb(var(--paper)) !important;
+  color: rgb(var(--ink)) !important;
+  border: 1px solid rgb(var(--ember) / 0.3);
+  border-radius: 2px !important;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.6) !important;
+}
+.leaflet-popup-tip {
+  background: rgb(var(--paper)) !important;
+  border: 1px solid rgb(var(--ember) / 0.3);
+}
+.leaflet-popup-content {
+  margin: 14px 18px !important;
+  font-size: 13px;
+  line-height: 1.45;
+}
+.emily-popup-name {
+  font-family: 'Cormorant Garamond', 'Noto Serif Khmer', Georgia, serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: rgb(var(--ink));
+  letter-spacing: 0.02em;
+  margin-bottom: 4px;
+}
+.emily-popup-blurb {
+  color: rgb(var(--ink-dim));
+  font-size: 12px;
+  font-weight: 300;
+}
+.leaflet-popup-close-button {
+  color: rgb(var(--ink-faint)) !important;
+  font-size: 18px !important;
+  padding: 6px 8px !important;
+}
+.leaflet-popup-close-button:hover {
+  color: rgb(var(--ember)) !important;
+}
+.emily-pin {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+}
